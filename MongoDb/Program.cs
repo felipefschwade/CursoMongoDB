@@ -1,12 +1,31 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MongoDb
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var livro = new Livro()
+            {
+                Titulo = "Under The Dome",
+                Autor = "Stephen King",
+                Ano = 2012,
+                Paginas = 679,
+                Assuntos = new List<string>()
+                {
+                    "Ficcção Científica",
+                    "Terror",
+                    "Ação"
+                }
+            };
+            var colection = MongoDBConnector.GetCollection("Livros");
+            await colection.InsertOneAsync(livro);
+            Console.WriteLine();
+            Console.ReadKey();
         }
     }
 }
