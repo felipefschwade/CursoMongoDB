@@ -12,20 +12,20 @@ namespace MongoDb
         {
             var livrosCollection = MongoDBConnector.GetLivrosCollection;
 
-            var filtro = new BsonDocument() { { "Autor", "Machado de Assis" } };
-            Console.WriteLine("Livros do Machado De Assis");
+            var filtro = Builders<Livro>.Filter.Eq(l => l.Titulo, "Game of Thrones");
+            Console.WriteLine("Alterando o Game of Thrones");
             var livros = await livrosCollection.Find(filtro).ToListAsync();
             foreach (var livro in livros)
             {
                 Console.WriteLine(livro.ToJson<Livro>());
+                livro.Ano = livro.Ano + 1;
+                livro.Paginas = livro.Paginas + 1;
+                await livrosCollection.ReplaceOneAsync(filtro, livro);
             }
 
-            Console.WriteLine();
-
-            var filtroComBuilder = Builders<Livro>.Filter;
-            var condicoes = filtroComBuilder.Eq(p => p.Autor, "Machado de Assis");
-            Console.WriteLine("Livros do Machado De Assis com Filtro");
-            livros = await livrosCollection.Find(condicoes).ToListAsync();
+            filtro = Builders<Livro>.Filter.Eq(l => l.Titulo, "Game of Thrones");
+            Console.WriteLine("Game of Thrones Alterado");
+            livros = await livrosCollection.Find(filtro).ToListAsync();
             foreach (var livro in livros)
             {
                 Console.WriteLine(livro.ToJson<Livro>());
@@ -33,10 +33,17 @@ namespace MongoDb
 
             Console.WriteLine();
 
-            filtroComBuilder = Builders<Livro>.Filter;
-            condicoes = filtroComBuilder.Gte(p => p.Paginas, 200);
-            Console.WriteLine("Livros com mais de 200 páginas");
-            livros = await livrosCollection.Find(condicoes).ToListAsync();
+            Console.WriteLine("Under The Dome Antes");
+            filtro = Builders<Livro>.Filter.Eq(l => l.Titulo, "Under The Dome");
+            livros = await livrosCollection.Find(filtro).ToListAsync();
+            foreach (var livro in livros)
+            {
+                Console.WriteLine(livro.ToJson<Livro>());
+            }
+            var filtroUpdate = Builders<Livro>.Update.Set(l => l.Ano, 2014);
+            Console.WriteLine("Alterando o Under the Dome");
+            await livrosCollection.UpdateOneAsync(filtro, filtroUpdate);
+            livros = await livrosCollection.Find(filtro).ToListAsync();
             foreach (var livro in livros)
             {
                 Console.WriteLine(livro.ToJson<Livro>());
@@ -44,36 +51,24 @@ namespace MongoDb
 
             Console.WriteLine();
 
-            filtroComBuilder = Builders<Livro>.Filter;
-            condicoes = filtroComBuilder.Gte(p => p.Paginas, 200) & filtroComBuilder.Gte(l => l.Ano, 1999);
-            Console.WriteLine("Livros com mais de 200 páginas e a partir de 1999");
-            livros = await livrosCollection.Find(condicoes).ToListAsync();
+            Console.WriteLine("Alterando os livros do machado de Assis");
+            filtro = Builders<Livro>.Filter.Eq(l => l.Autor, "Machado de Assis");
+            livros = await livrosCollection.Find(filtro).ToListAsync();
+            foreach (var livro in livros)
+            {
+                Console.WriteLine(livro.ToJson<Livro>());
+            }
+            filtroUpdate = Builders<Livro>.Update.Set(l => l.Autor, "M. De Assis");
+            Console.WriteLine("Alterando os livros do machado de Assis");
+            await livrosCollection.UpdateManyAsync(filtro, filtroUpdate);
+            filtro = Builders<Livro>.Filter.Eq(l => l.Autor, "M. De Assis");
+            livros = await livrosCollection.Find(filtro).ToListAsync();
             foreach (var livro in livros)
             {
                 Console.WriteLine(livro.ToJson<Livro>());
             }
 
-            Console.WriteLine();
-
-            filtroComBuilder = Builders<Livro>.Filter;
-            condicoes = filtroComBuilder.AnyEq(p => p.Assuntos, "Ficção Científica");
-            Console.WriteLine("Livros de Ficção Científica");
-            livros = await livrosCollection.Find(condicoes).ToListAsync();
-            foreach (var livro in livros)
-            {
-                Console.WriteLine(livro.ToJson<Livro>());
-            }
-
-            Console.WriteLine();
-
-            filtroComBuilder = Builders<Livro>.Filter;
-            condicoes = filtroComBuilder.Gt(p => p.Paginas, 100);
-            Console.WriteLine("Livros Com mais de 100 páginas em ordem alfabética");
-            livros = await livrosCollection.Find(condicoes).SortBy(l => l.Titulo).ToListAsync();
-            foreach (var livro in livros)
-            {
-                Console.WriteLine(livro.ToJson<Livro>());
-            }
+            Console.ReadKey();
 
             Console.ReadKey();
         }
