@@ -11,7 +11,8 @@ namespace MongoDb
         public static async Task Main(string[] args)
         {
             var livrosCollection = MongoDBConnector.GetLivrosCollection;
-            var livros = await livrosCollection.Find(new BsonDocument()).ToListAsync();
+            var filtro = new BsonDocument() { { "Autor", "Machado de Assis" } };
+            var livros = await livrosCollection.Find(filtro).ToListAsync();
             foreach (var livro in livros)
             {
                 Console.WriteLine(livro.ToJson<Livro>());
