@@ -8,15 +8,13 @@ namespace MongoDb
 {
     public class MongoDBConnector
     {
-        public static IMongoCollection<Livro> GetCollection(string collection)
-        {
-            return BancoDeDados.GetCollection<Livro>(collection);
-        }
-
+        const string BANCO_DE_DADOS = "Biblioteca";
         public const string ConnectionString = "mongodb://localhost:27017";
+
+        public static IMongoCollection<Livro> GetLivrosCollection { get { return BancoDeDados.GetCollection<Livro>("Livros"); } }
 
         public static IMongoClient Client = new MongoClient(ConnectionString);
 
-        public static IMongoDatabase BancoDeDados = BancoDeDados = Client.GetDatabase("Biblioteca");
+        public static IMongoDatabase BancoDeDados = Client.GetDatabase(BANCO_DE_DADOS);
     }
 }

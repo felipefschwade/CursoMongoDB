@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,22 +10,12 @@ namespace MongoDb
     {
         public static async Task Main(string[] args)
         {
-            var livro = new Livro()
+            var livrosCollection = MongoDBConnector.GetLivrosCollection;
+            var livros = await livrosCollection.Find(new BsonDocument()).ToListAsync();
+            foreach (var livro in livros)
             {
-                Titulo = "Under The Dome",
-                Autor = "Stephen King",
-                Ano = 2012,
-                Paginas = 679,
-                Assuntos = new List<string>()
-                {
-                    "Ficcção Científica",
-                    "Terror",
-                    "Ação"
-                }
-            };
-            var colection = MongoDBConnector.GetCollection("Livros");
-            await colection.InsertOneAsync(livro);
-            Console.WriteLine();
+                Console.WriteLine(livro.ToJson<Livro>());
+            }
             Console.ReadKey();
         }
     }

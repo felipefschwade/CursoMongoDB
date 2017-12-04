@@ -15,5 +15,6 @@ namespace MongoDb
         public int Ano { get; set; }
         public int Paginas { get; set; }
         public IList<string> Assuntos { get; set; }
+
     }
 }
