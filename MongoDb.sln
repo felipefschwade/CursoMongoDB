@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDb", "MongoDb\MongoDb.csproj", "{97EA9186-F811-470B-AFE6-EF6202EB3E3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDb", "MongoDb\MongoDb.csproj", "{97EA9186-F811-470B-AFE6-EF6202EB3E3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroportoMongoDb", "AeroportoMongoDb\AeroportoMongoDb.csproj", "{C118F7B2-1BB1-48EA-A287-82A3A7BD0D7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{97EA9186-F811-470B-AFE6-EF6202EB3E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97EA9186-F811-470B-AFE6-EF6202EB3E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97EA9186-F811-470B-AFE6-EF6202EB3E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C118F7B2-1BB1-48EA-A287-82A3A7BD0D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C118F7B2-1BB1-48EA-A287-82A3A7BD0D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C118F7B2-1BB1-48EA-A287-82A3A7BD0D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C118F7B2-1BB1-48EA-A287-82A3A7BD0D7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
